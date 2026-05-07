@@ -1,0 +1,230 @@
+<!-- ===== LOGIN PAGE ===== -->
+<div class="min-h-screen bg-[#0d0f14] flex flex-col" style="font-family: 'DM Sans', sans-serif">
+  <!-- Background decorative blobs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(79,142,247,0.08),transparent_70%)]"
+    ></div>
+    <div
+      class="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(124,90,247,0.08),transparent_70%)]"
+    ></div>
+  </div>
+
+  <!-- Header -->
+  <header class="relative z-10 px-8 py-6">
+    <div class="flex items-center gap-2.5">
+      <span class="text-xl">⚡</span>
+      <span
+        class="font-extrabold text-xl bg-gradient-to-r from-[#4f8ef7] to-[#7c5af7] bg-clip-text text-transparent tracking-wide"
+        style="font-family: 'Syne', sans-serif"
+      >
+        Bill Split
+      </span>
+    </div>
+  </header>
+
+  <!-- Main centered content -->
+  <main class="relative z-10 flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <!-- Card -->
+      <div
+        class="bg-[#161920] border border-[#2a2f3d] rounded-2xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+      >
+        <!-- Card top accent bar -->
+        <div class="h-1 w-full bg-gradient-to-r from-[#4f8ef7] to-[#7c5af7]"></div>
+
+        <div class="px-8 pt-8 pb-10">
+          <!-- Title block -->
+          <div class="mb-8">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#4f8ef7] shadow-[0_0_8px_#4f8ef7]"></span>
+              <span
+                class="text-[10px] font-bold uppercase tracking-[2px] text-[#6b7694]"
+                style="font-family: 'Syne', sans-serif"
+                >Welcome back</span
+              >
+            </div>
+          </div>
+
+          <!-- Error message -->
+          <div
+            *ngIf="errorMessage"
+            class="mb-5 flex items-center gap-2.5 bg-[#f8717120] border border-[#f8717140] rounded-xl px-4 py-3"
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#f87171"
+              stroke-width="2.5"
+              class="shrink-0"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span class="text-[#f87171] text-sm">{{ errorMessage }}</span>
+          </div>
+
+          <!-- Form -->
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="flex flex-col gap-5">
+            <!-- Email -->
+            <div class="flex flex-col gap-1.5">
+              <label
+                class="text-[11px] font-bold uppercase tracking-[1px] text-[#6b7694]"
+                style="font-family: 'Syne', sans-serif"
+              >
+                Username
+              </label>
+              <div class="relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6b7694]">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  [(ngModel)]="username"
+                  name="username"
+                  placeholder="your_username"
+                  autocomplete="username"
+                  class="w-full bg-[#1e2330] border border-[#2a2f3d] rounded-xl text-[#e8ecf4] text-sm pl-10 pr-4 py-3 outline-none placeholder-[#6b769460] transition-all duration-150 focus:border-[#4f8ef7] focus:shadow-[0_0_0_3px_rgba(79,142,247,0.12)]"
+                />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <label
+                  class="text-[11px] font-bold uppercase tracking-[1px] text-[#6b7694]"
+                  style="font-family: 'Syne', sans-serif"
+                >
+                  Password
+                </label>
+                <!-- <a href="#"
+                   class="text-[11px] text-[#4f8ef7] hover:text-[#7c5af7] transition-colors duration-150 font-medium">
+                  Forgot password?
+                </a> -->
+              </div>
+              <div class="relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6b7694]">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                </span>
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  [(ngModel)]="password"
+                  name="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  class="w-full bg-[#1e2330] border border-[#2a2f3d] rounded-xl text-[#e8ecf4] text-sm pl-10 pr-12 py-3 outline-none placeholder-[#6b769460] transition-all duration-150 focus:border-[#4f8ef7] focus:shadow-[0_0_0_3px_rgba(79,142,247,0.12)]"
+                />
+                <!-- Toggle visibility -->
+                <button
+                  type="button"
+                  (click)="togglePassword()"
+                  class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6b7694] hover:text-[#e8ecf4] bg-transparent border-none cursor-pointer transition-colors duration-150 p-0.5"
+                >
+                  <!-- Eye open -->
+                  <svg
+                    *ngIf="!showPassword"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <!-- Eye closed -->
+                  <svg
+                    *ngIf="showPassword"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                    />
+                    <path
+                      d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <button
+              type="submit"
+              [disabled]="isLoading"
+              class="w-full flex items-center justify-center gap-2.5 bg-gradient-to-br from-[#4f8ef7] to-[#7c5af7] text-white rounded-xl px-6 py-3.5 font-bold text-sm tracking-wide border-none cursor-pointer shadow-[0_8px_28px_rgba(79,142,247,0.35)] transition-all duration-200 mt-1 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(79,142,247,0.45)] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              style="font-family: 'Syne', sans-serif"
+            >
+              <!-- Spinner -->
+              <svg
+                *ngIf="isLoading"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                stroke-width="2.5"
+                class="animate-spin"
+              >
+                <path
+                  d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+                />
+              </svg>
+
+              <span>{{ isLoading ? 'Signing in…' : 'Sign In' }}</span>
+
+              <svg
+                *ngIf="!isLoading"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                stroke-width="2.5"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

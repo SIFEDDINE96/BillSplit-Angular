@@ -1,0 +1,702 @@
+<!-- ===== HOME PAGE ===== -->
+<div class="min-h-screen bg-[#0d0f14] text-[#e8ecf4]" style="font-family: 'DM Sans', sans-serif">
+  <header
+    class="bg-gradient-to-br from-[#111520] to-[#181d2e] border-b border-[#2a2f3d] px-4 sm:px-8 md:px-12 py-4 sm:py-5"
+  >
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <!-- ── BRAND ── -->
+      <div class="flex flex-col gap-0.5">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">⚡</span>
+          <span
+            class="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-[#4f8ef7] to-[#7c5af7] bg-clip-text text-transparent tracking-wide"
+            style="font-family: 'Syne', sans-serif"
+            >Bill Split</span
+          >
+        </div>
+        <p class="text-[11px] text-[#6b7694] font-light hidden sm:block pl-6">
+          Keep your bill traceable and transparent.
+        </p>
+      </div>
+
+      <!-- ── RIGHT SIDE ── -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Clickable overlay to close menu -->
+        <div *ngIf="showUserMenu" (click)="closeUserMenu()" class="fixed inset-0 z-40"></div>
+
+        <!-- User pill — hidden on mobile -->
+        <div class="hidden sm:block relative">
+          <div
+            (click)="toggleUserMenu()"
+            class="flex items-center gap-3 bg-[#161920] border border-[#2a2f3d] rounded-2xl px-4 py-2.5 hover:border-[#4f8ef7]/40 transition-all duration-200 cursor-pointer select-none"
+            [ngClass]="{ 'border-[#4f8ef7]/40': showUserMenu }"
+          >
+            <!-- Avatar -->
+            <div
+              class="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#4f8ef7] to-[#7c5af7] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(79,142,247,0.3)]"
+            >
+              <span
+                class="text-[12px] font-bold text-white"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ (currentUsername || '').slice(0, 2).toUpperCase() }}
+              </span>
+              <span
+                class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#34d399] border-2 border-[#161920]"
+              ></span>
+            </div>
+            <!-- Info -->
+            <div class="flex flex-col gap-0.5">
+              <span
+                class="text-[15px] font-bold text-[#e8ecf4] leading-none tracking-wide"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ currentUsername }}
+              </span>
+              <span class="text-[10px] text-[#34d399] leading-none font-semibold tracking-wide"
+                >● Online</span
+              >
+            </div>
+            <!-- Chevron -->
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#6b7694"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              class="ml-1 transition-transform duration-200"
+              [ngClass]="{ 'rotate-180': showUserMenu }"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+
+          <!-- Dropdown -->
+          <div
+            *ngIf="showUserMenu"
+            class="absolute right-0 top-[calc(100%+8px)] z-50 w-48 bg-[#161920] border border-[#2a2f3d] rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.5)] overflow-hidden"
+          >
+            <!-- User info header -->
+            <div class="px-4 py-3 border-b border-[#2a2f3d]">
+              <p
+                class="text-[12px] font-bold text-[#e8ecf4]"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ currentUsername }}
+              </p>
+              <p class="text-[10px] text-[#34d399] font-semibold mt-0.5">● Online</p>
+            </div>
+
+            <!-- Options -->
+            <div class="py-1.5">
+              <button
+                (click)="navigateTo('/home')"
+                class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-[13px] text-[#e8ecf4] hover:bg-[#1e2330] transition-colors duration-150 cursor-pointer"
+              >
+                <span
+                  class="w-7 h-7 rounded-lg bg-[#4f8ef720] flex items-center justify-center shrink-0"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#4f8ef7"
+                    stroke-width="2.5"
+                  >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+                <div class="flex flex-col">
+                  <span class="font-semibold" style="font-family: 'Syne', sans-serif">Common</span>
+                  <span class="text-[10px] text-[#6b7694]">Shared expenses</span>
+                </div>
+              </button>
+
+              <button
+                (click)="navigateTo('/me')"
+                class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-[13px] text-[#e8ecf4] hover:bg-[#1e2330] transition-colors duration-150 cursor-pointer"
+              >
+                <span
+                  class="w-7 h-7 rounded-lg bg-[#7c5af720] flex items-center justify-center shrink-0"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#7c5af7"
+                    stroke-width="2.5"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </span>
+                <div class="flex flex-col">
+                  <span class="font-semibold" style="font-family: 'Syne', sans-serif"
+                    >Personal</span
+                  >
+                  <span class="text-[10px] text-[#6b7694]">My expenses</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile avatar only -->
+        <div class="flex sm:hidden relative">
+          <div
+            (click)="toggleUserMenu()"
+            class="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#4f8ef7] to-[#7c5af7] flex items-center justify-center shrink-0 cursor-pointer"
+          >
+            <span class="text-[12px] font-bold text-white" style="font-family: 'Syne', sans-serif">
+              {{ (currentUsername || '').slice(0, 2).toUpperCase() }}
+            </span>
+            <span
+              class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#34d399] border-2 border-[#0d0f14]"
+            ></span>
+          </div>
+
+          <!-- Mobile dropdown -->
+          <div
+            *ngIf="showUserMenu"
+            class="absolute right-0 top-[calc(100%+8px)] z-50 w-48 bg-[#161920] border border-[#2a2f3d] rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.5)] overflow-hidden"
+          >
+            <div class="px-4 py-3 border-b border-[#2a2f3d]">
+              <p
+                class="text-[12px] font-bold text-[#e8ecf4]"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ currentUsername }}
+              </p>
+              <p class="text-[10px] text-[#34d399] font-semibold mt-0.5">● Online</p>
+            </div>
+            <div class="py-1.5">
+              <button
+                (click)="navigateTo('/home')"
+                class="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#e8ecf4] hover:bg-[#1e2330] transition-colors duration-150 cursor-pointer"
+              >
+                <span
+                  class="w-7 h-7 rounded-lg bg-[#4f8ef720] flex items-center justify-center shrink-0"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#4f8ef7"
+                    stroke-width="2.5"
+                  >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+                <div class="flex flex-col text-left">
+                  <span class="font-semibold" style="font-family: 'Syne', sans-serif">Common</span>
+                  <span class="text-[10px] text-[#6b7694]">Shared expenses</span>
+                </div>
+              </button>
+
+              <button
+                (click)="navigateTo('/me')"
+                class="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-[#e8ecf4] hover:bg-[#1e2330] transition-colors duration-150 cursor-pointer"
+              >
+                <span
+                  class="w-7 h-7 rounded-lg bg-[#7c5af720] flex items-center justify-center shrink-0"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#7c5af7"
+                    stroke-width="2.5"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </span>
+                <div class="flex flex-col text-left">
+                  <span class="font-semibold" style="font-family: 'Syne', sans-serif"
+                    >Personal</span
+                  >
+                  <span class="text-[10px] text-[#6b7694]">My expenses</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="hidden sm:block w-px h-8 bg-[#2a2f3d]"></div>
+
+        <!-- Logout button -->
+        <button
+          (click)="handleLogout()"
+          class="flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl text-sm font-medium text-[#4f8ef7] hover:text-white hover:bg-[#4f8ef7]/10 border border-[#4f8ef7]/30 hover:border-[#4f8ef7] transition-all duration-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span class="hidden sm:inline">Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── LOADING STATE ─── -->
+  <div *ngIf="isLoading" class="flex items-center justify-center py-32">
+    <div class="flex flex-col items-center gap-4">
+      <div
+        class="w-10 h-10 rounded-full border-2 border-[#4f8ef7] border-t-transparent animate-spin"
+      ></div>
+      <span class="text-[#6b7694] text-sm">Loading data...</span>
+    </div>
+  </div>
+
+  <main
+    *ngIf="!isLoading"
+    class="max-w-6xl mx-auto px-4 sm:px-8 md:px-12 py-6 sm:py-10 flex flex-col gap-8 sm:gap-12"
+  >
+    <!-- ─── SECTION 1 : USER CARDS ─── -->
+    <section>
+      <div class="flex items-center gap-2 mb-4 sm:mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#4f8ef7] shadow-[0_0_8px_#4f8ef7]"></span>
+        <span
+          class="text-[10px] font-bold uppercase tracking-[2px] text-[#6b7694]"
+          style="font-family: 'Syne', sans-serif"
+          >Account Overview</span
+        >
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div
+          *ngFor="let user of users"
+          class="relative bg-[#161920] rounded-2xl p-5 sm:p-6 overflow-hidden transition-transform duration-200 hover:-translate-y-1 group cursor-default border"
+          [ngClass]="{
+            'border-red-500/60 hover:border-red-500': user.username === lowestPayerUsername,
+            'border-[#2a2f3d] hover:border-[#4f8ef780]': user.username !== lowestPayerUsername,
+          }"
+        >
+          <!-- Hover glow -->
+          <div
+            class="absolute -top-10 -right-10 w-28 h-28 rounded-full pointer-events-none bg-[radial-gradient(circle,rgba(79,142,247,0.15),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          ></div>
+
+          <!-- Warning section for lowest payer -->
+          <div
+            *ngIf="user.username === lowestPayerUsername"
+            class="absolute top-3 right-3 z-10 flex flex-col items-end gap-1.5"
+          >
+            <div
+              class="text-[10px] font-semibold bg-red-500/20 text-red-400 border border-red-500/40 px-2 py-0.5 rounded-full"
+            >
+              Pay next bill
+            </div>
+            <div
+              class="text-[11px] font-medium bg-amber-500/20 text-amber-400 border border-amber-500/40 px-2.5 py-1 rounded-lg backdrop-blur-sm"
+            >
+              You must spend {{ getAmountToReachEquilibrium(user) }} MAD to reach equilibrium
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5 mb-4 sm:mb-5">
+            <div class="flex flex-col gap-1">
+              <span
+                class="font-bold text-lg sm:text-xl text-[#e8ecf4]"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ user.username }}
+              </span>
+              <span
+                class="text-[10px] font-medium bg-[#34d39920] text-[#34d399] border border-[#34d39940] px-2 py-0.5 rounded-full w-fit"
+              >
+                Active
+              </span>
+            </div>
+          </div>
+
+          <div class="h-px bg-[#2a2f3d] mb-4 sm:mb-5"></div>
+
+          <div class="flex flex-col gap-1">
+            <span class="text-[11px] text-[#6b7694] uppercase tracking-[1px] font-medium"
+              >Total Paid</span
+            >
+            <span
+              class="text-xl sm:text-2xl font-extrabold text-[#e8ecf4]"
+              style="font-family: 'Syne', sans-serif"
+            >
+              {{ user.totalPaidAmount }} MAD
+            </span>
+          </div>
+
+          <!-- Progress bar showing gap to equilibrium -->
+          <div *ngIf="user.username === lowestPayerUsername" class="mt-4 pt-2">
+            <div class="flex justify-between text-[10px] text-[#6b7694] mb-1">
+              <span>Current</span>
+              <span>Target: {{ getHighestPaidAmount() }} MAD</span>
+            </div>
+            <div class="h-1.5 bg-[#2a2f3d] rounded-full overflow-hidden">
+              <div
+                class="h-full bg-gradient-to-r from-amber-500 to-red-500 rounded-full transition-all duration-500"
+                [style.width]="getProgressPercentage(user) + '%'"
+              ></div>
+            </div>
+            <div class="text-right text-[10px] text-[#6b7694] mt-1">
+              {{ getProgressPercentage(user) }}% of target
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SECTION 2 : PAY NEW BILL BUTTON ─── -->
+    <section class="flex justify-center">
+      <button
+        (click)="openAddModal()"
+        class="flex items-center gap-2.5 bg-gradient-to-br from-[#4f8ef7] to-[#7c5af7] text-white rounded-full px-7 sm:px-9 py-3.5 sm:py-4 font-bold text-sm tracking-wide border-none cursor-pointer shadow-[0_8px_28px_rgba(79,142,247,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_12px_36px_rgba(79,142,247,0.45)] active:scale-[0.98]"
+        style="font-family: 'Syne', sans-serif"
+      >
+        <span class="text-2xl leading-none font-light">+</span>
+        <span>Pay New Bill</span>
+      </button>
+    </section>
+
+    <!-- ─── SECTION 3 : BILLS TABLE ─── -->
+    <section>
+      <div class="flex items-center gap-2 mb-4 sm:mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#4f8ef7] shadow-[0_0_8px_#4f8ef7]"></span>
+        <span
+          class="text-[10px] font-bold uppercase tracking-[2px] text-[#6b7694]"
+          style="font-family: 'Syne', sans-serif"
+          >Bills History</span
+        >
+        <span
+          class="ml-auto text-[11px] text-[#6b7694] bg-[#1e2330] border border-[#2a2f3d] px-3 py-0.5 rounded-full"
+        >
+          {{ bills.length }} records
+        </span>
+      </div>
+
+      <!-- ── DESKTOP TABLE (md+) ── -->
+      <div class="hidden md:block border border-[#2a2f3d] rounded-2xl overflow-hidden">
+        <table class="w-full border-collapse text-[13.5px]">
+          <thead>
+            <tr class="bg-[#1e2330] border-b border-[#2a2f3d]">
+              <th
+                *ngFor="
+                  let h of ['#', 'Description', 'Amount', 'Date', 'Paid By', 'Status', 'Actions']
+                "
+                class="px-4 py-3.5 text-left text-[10.5px] font-bold uppercase tracking-[1.5px] text-[#6b7694] whitespace-nowrap"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ h }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let bill of paginatedBills; let i = index"
+              class="bg-[#161920] border-b border-[#2a2f3d]/60 last:border-b-0 transition-colors duration-150 hover:bg-[#1e2330]"
+            >
+              <td class="px-4 py-3.5 text-[#6b7694] text-xs align-middle">
+                {{ (currentPage - 1) * pageSize + i + 1 }}
+              </td>
+              <td class="px-4 py-3.5 font-medium text-[#e8ecf4] align-middle">
+                {{ bill.description }}
+              </td>
+              <td
+                class="px-4 py-3.5 font-bold text-[#4f8ef7] align-middle"
+                style="font-family: 'Syne', sans-serif"
+              >
+                {{ bill.amount }} MAD
+              </td>
+              <td class="px-4 py-3.5 text-[#6b7694] text-[12.5px] align-middle">{{ bill.date }}</td>
+              <td class="px-4 py-3.5 text-[#e8ecf4] align-middle">
+                {{ getOwnerName(bill.ownerId) }}
+              </td>
+              <td class="px-4 py-3.5 align-middle">
+                <span
+                  [ngClass]="{
+                    'bg-[#34d39920] text-[#34d399] border-[#34d39940]': bill.status === 'Paid',
+                    'bg-[#f8717120] text-[#f87171] border-[#f8717140]': bill.status === 'Cancelled',
+                  }"
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border tracking-[0.4px]"
+                  >{{ bill.status }}</span
+                >
+              </td>
+              <td class="px-4 py-3.5 align-middle">
+                <button
+                  *ngIf="currentUserId && +bill.ownerId === +currentUserId"
+                  (click)="openEditModal(bill)"
+                  class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border cursor-pointer bg-[#4f8ef720] text-[#4f8ef7] border-[#4f8ef740] transition-all duration-150 hover:bg-[#4f8ef733] hover:border-[#4f8ef780]"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                  Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── MOBILE CARDS (< md) ── -->
+      <div class="md:hidden flex flex-col gap-3">
+        <div
+          *ngFor="let bill of paginatedBills; let i = index"
+          class="bg-[#161920] border border-[#2a2f3d] rounded-xl p-4"
+        >
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex flex-col gap-1">
+              <span class="font-semibold text-[#e8ecf4] text-sm">{{ bill.description }}</span>
+              <span class="text-[11px] text-[#6b7694]"
+                >{{ bill.date }} · {{ getOwnerName(bill.ownerId) }}</span
+              >
+            </div>
+            <span
+              [ngClass]="{
+                'bg-[#34d39920] text-[#34d399] border-[#34d39940]': bill.status === 'Paid',
+                'bg-[#f8717120] text-[#f87171] border-[#f8717140]': bill.status === 'Cancelled',
+              }"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border tracking-[0.4px] shrink-0 ml-2"
+              >{{ bill.status }}</span
+            >
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span
+              class="text-lg font-extrabold text-[#4f8ef7]"
+              style="font-family: 'Syne', sans-serif"
+            >
+              {{ bill.amount }} MAD
+            </span>
+            <button
+              *ngIf="currentUserId && +bill.ownerId === +currentUserId"
+              (click)="openEditModal(bill)"
+              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border cursor-pointer bg-[#4f8ef720] text-[#4f8ef7] border-[#4f8ef740] transition-all duration-150 hover:bg-[#4f8ef733]"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              Edit
+            </button>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="bills.length === 0" class="text-center py-12 text-[#6b7694] text-sm">
+          No bills yet. Add your first bill!
+        </div>
+      </div>
+
+      <!-- ── PAGINATION ── -->
+      <div class="flex items-center justify-center gap-1.5 mt-5 sm:mt-6" *ngIf="totalPages > 1">
+        <button
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="min-w-[36px] h-9 px-2.5 rounded-lg bg-[#161920] border border-[#2a2f3d] text-[#6b7694] text-lg leading-none cursor-pointer transition-all duration-150 hover:bg-[#1e2330] hover:text-[#e8ecf4] hover:border-[#4f8ef7] disabled:opacity-35 disabled:cursor-not-allowed"
+        >
+          &#8249;
+        </button>
+
+        <button
+          *ngFor="let p of pageNumbers"
+          (click)="goToPage(p)"
+          [ngClass]="
+            p === currentPage
+              ? 'bg-[#4f8ef7] border-[#4f8ef7] text-white shadow-[0_4px_12px_rgba(79,142,247,0.3)]'
+              : 'bg-[#161920] border-[#2a2f3d] text-[#6b7694] hover:bg-[#1e2330] hover:text-[#e8ecf4] hover:border-[#4f8ef7]'
+          "
+          class="min-w-[36px] h-9 px-2.5 rounded-lg border text-sm font-bold cursor-pointer transition-all duration-150"
+          style="font-family: 'Syne', sans-serif"
+        >
+          {{ p }}
+        </button>
+
+        <button
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          class="min-w-[36px] h-9 px-2.5 rounded-lg bg-[#161920] border border-[#2a2f3d] text-[#6b7694] text-lg leading-none cursor-pointer transition-all duration-150 hover:bg-[#1e2330] hover:text-[#e8ecf4] hover:border-[#4f8ef7] disabled:opacity-35 disabled:cursor-not-allowed"
+        >
+          &#8250;
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ════════════════════════════════
+     MODAL — Add / Edit Bill
+════════════════════════════════ -->
+<div
+  *ngIf="showModal"
+  (click)="closeModal()"
+  class="fixed inset-0 bg-black/65 backdrop-blur-md flex items-center justify-center z-50 p-4 sm:p-5"
+>
+  <div
+    (click)="$event.stopPropagation()"
+    class="bg-[#161920] border border-[#2a2f3d] rounded-2xl w-full max-w-lg shadow-[0_24px_80px_rgba(0,0,0,0.6)]"
+  >
+    <div
+      class="flex items-center justify-between px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-[#2a2f3d]"
+    >
+      <h2 class="font-extrabold text-[17px] text-[#e8ecf4]" style="font-family: 'Syne', sans-serif">
+        {{ isEditMode ? 'Edit Bill' : 'Pay New Bill' }}
+      </h2>
+      <button
+        (click)="closeModal()"
+        class="text-[#6b7694] w-8 h-8 rounded-lg flex items-center justify-center bg-transparent border-none cursor-pointer transition-all duration-150 hover:bg-[#1e2330] hover:text-[#e8ecf4]"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="px-5 sm:px-6 py-5 sm:py-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
+        <label
+          class="text-[11px] font-bold uppercase tracking-[1px] text-[#6b7694]"
+          style="font-family: 'Syne', sans-serif"
+        >
+          Description
+        </label>
+        <input
+          type="text"
+          [(ngModel)]="newBill.description"
+          placeholder="e.g. Electricity Bill"
+          class="bg-[#1e2330] border border-[#2a2f3d] rounded-lg text-[#e8ecf4] text-sm px-3.5 py-2.5 w-full outline-none placeholder-[#6b769460] transition-all duration-150 focus:border-[#4f8ef7] focus:shadow-[0_0_0_3px_rgba(79,142,247,0.12)]"
+        />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label
+          class="text-[11px] font-bold uppercase tracking-[1px] text-[#6b7694]"
+          style="font-family: 'Syne', sans-serif"
+        >
+          Amount (MAD)
+        </label>
+        <input
+          type="number"
+          [(ngModel)]="newBill.amount"
+          placeholder="0.00"
+          min="0"
+          step="0.01"
+          class="bg-[#1e2330] border border-[#2a2f3d] rounded-lg text-[#e8ecf4] text-sm px-3.5 py-2.5 w-full outline-none placeholder-[#6b769460] transition-all duration-150 focus:border-[#4f8ef7] focus:shadow-[0_0_0_3px_rgba(79,142,247,0.12)]"
+        />
+      </div>
+
+      <div class="flex flex-col gap-1.5" *ngIf="isEditMode">
+        <label
+          class="text-[11px] font-bold uppercase tracking-[1px] text-[#6b7694]"
+          style="font-family: 'Syne', sans-serif"
+        >
+          Status
+        </label>
+        <select
+          [(ngModel)]="newBill.status"
+          class="bg-[#1e2330] border border-[#2a2f3d] rounded-lg text-[#e8ecf4] text-sm px-3.5 py-2.5 w-full outline-none transition-all duration-150 focus:border-[#4f8ef7] focus:shadow-[0_0_0_3px_rgba(79,142,247,0.12)]"
+        >
+          <option value="Paid" class="bg-[#161920]">Paid</option>
+          <option value="Cancelled" class="bg-[#161920]">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-2.5 px-5 sm:px-6 pb-5 sm:pb-6 pt-4 border-t border-[#2a2f3d]">
+      <button
+        (click)="closeModal()"
+        class="bg-[#1e2330] border border-[#2a2f3d] text-[#6b7694] px-4 sm:px-5 py-2.5 rounded-lg text-sm font-bold cursor-pointer transition-all duration-150 hover:text-[#e8ecf4] hover:border-[#e8ecf430]"
+        style="font-family: 'Syne', sans-serif"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="saveBill()"
+        class="bg-gradient-to-br from-[#4f8ef7] to-[#7c5af7] text-white px-5 sm:px-6 py-2.5 rounded-lg text-sm font-bold border-none cursor-pointer shadow-[0_4px_14px_rgba(79,142,247,0.3)] transition-all duration-150 hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(79,142,247,0.4)]"
+        style="font-family: 'Syne', sans-serif"
+      >
+        {{ isEditMode ? 'Save Changes' : 'Add Bill' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     MODAL — Delete Confirm
+════════════════════════════════ -->
+<div
+  *ngIf="showDeleteConfirm"
+  (click)="cancelDelete()"
+  class="fixed inset-0 bg-black/65 backdrop-blur-md flex items-center justify-center z-50 p-4 sm:p-5"
+>
+  <div
+    (click)="$event.stopPropagation()"
+    class="bg-[#161920] border border-[#2a2f3d] rounded-2xl w-full max-w-sm shadow-[0_24px_80px_rgba(0,0,0,0.6)]"
+  >
+    <div
+      class="flex items-center justify-between px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-[#2a2f3d]"
+    >
+      <h2 class="font-extrabold text-[17px] text-[#f87171]" style="font-family: 'Syne', sans-serif">
+        Delete Bill
+      </h2>
+      <button
+        (click)="cancelDelete()"
+        class="text-[#6b7694] w-8 h-8 rounded-lg flex items-center justify-center bg-transparent border-none cursor-pointer transition-all duration-150 hover:bg-[#1e2330] hover:text-[#e8ecf4]"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="px-5 sm:px-6 py-5 sm:py-6">
+      <p class="text-[#6b7694] text-sm leading-relaxed">
+        Are you sure you want to delete this bill? This action cannot be undone.
+      </p>
+    </div>
+
+    <div class="flex justify-end gap-2.5 px-5 sm:px-6 pb-5 sm:pb-6 pt-4 border-t border-[#2a2f3d]">
+      <button
+        (click)="cancelDelete()"
+        class="bg-[#1e2330] border border-[#2a2f3d] text-[#6b7694] px-4 sm:px-5 py-2.5 rounded-lg text-sm font-bold cursor-pointer transition-all duration-150 hover:text-[#e8ecf4] hover:border-[#e8ecf430]"
+        style="font-family: 'Syne', sans-serif"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
